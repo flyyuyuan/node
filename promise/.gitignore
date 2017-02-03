@@ -1,0 +1,14 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+node_modules
+
+# Net:
+*.[oa]
+*~
+*.cs
+
+# My configurations:
+db.ini
+deploy_key_rsa
