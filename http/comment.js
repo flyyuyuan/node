@@ -2,8 +2,8 @@ var http = require('http');
 var querystring = require('querystring');
 
 var postData = querystring.stringify({
-    'content':'scott is  vevy good',
-    'cid':348
+    'content':'scott 老师很棒，继续学习！',
+    'mid':8837
 })
 
 var options = {
@@ -11,18 +11,18 @@ var options = {
     port:80,
     path:'/course/docomment',
     method:'POST',
-    header:{
+    headers:{
         'Accept':'application/json, text/javascript, */*; q=0.01',
-        'Accept-Encoding':'gzip, deflate',
+        'Accept-Encoding':'gzip, deflate,sdch',
         'Accept-Language':'zh-CN,zh;q=0.8',
         'Connection':'keep-alive',
         'Content-Length':postData.length,
         'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-        'Cookie':'imooc_uuid=ad3ff7b6-1ead-405c-a469-db76e6bcdecc; imooc_isnew_ct=1485851876; loginstate=1; apsid=M1ZDQyOGY2YTU1ODIzYWRkMmE0Y2QyMTZlMjBhODIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMTM4NDMxNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyNDAwOTA4MzlAcXEuY29tAAAAAAAAAAAAAAAAAAAAAGJiNzEwZTQyNmJjZjY2MGI2ZDQ3NWNmZDdmMTQ5NWEzFU2QWBVNkFg%3DMG; last_login_username=240090839%40qq.com; PHPSESSID=c9jma03tvbtuudrhj244ocfuo1; imooc_isnew=2; IMCDNS=0; Hm_lvt_f0cfcccd7b1393990c78efdeebff3968=1486001566,1486021888,1486025732,1486091933; Hm_lpvt_f0cfcccd7b1393990c78efdeebff3968=1486113172; cvde=5893f69d1bb4d-164',
+        'Cookie':'imooc_uuid=c5cb371f-dfc6-4ef8-858a-bc93db284770; imooc_isnew_ct=1486007874; PHPSESSID=h25b1ko23ubnci2hakr1uh5704; loginstate=1; apsid=M1ZDQyOGY2YTU1ODIzYWRkMmE0Y2QyMTZlMjBhODIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMTM4NDMxNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyNDAwOTA4MzlAcXEuY29tAAAAAAAAAAAAAAAAAAAAAGFkNzUxNzNhZTgyZWMwMzViZjI4YTEwMzU2OGU3MzAw0mGUWNJhlFg%3DMG; last_login_username=240090839%40qq.com; IMCDNS=0; Hm_lvt_f0cfcccd7b1393990c78efdeebff3968=1486007872,1486119343; Hm_lpvt_f0cfcccd7b1393990c78efdeebff3968=1486119977; imooc_isnew=2; cvde=589461b04f8b5-24',
         'Host':'www.imooc.com',
         'Origin':'http://www.imooc.com',
-        'Referer':'http://www.imooc.com/comment/348',
-        'User-Agent':'Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.59 Mobile Safari/537.36',
+        'Referer':'http://www.imooc.com/video/8837',
+        'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',
         'X-Requested-With':'XMLHttpRequest'
     } 
 }
