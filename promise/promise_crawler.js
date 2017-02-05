@@ -4,15 +4,16 @@ var Promise = require('bluebird');
 var cheerio = require('cheerio');
 var baseurl ='http://www.imooc.com/learn/';
 var url = 'http://www.imooc.com/learn/348';
-var videoIds=[348,259,197,637,75];//,259,197,134,75
+var videoIds=[75,259,197,134,348];//,259,197,134,348
 
-function filterChapters(ajaxData){
+function filterChapters(ajaxData){//将每一个课程html解析
+    //console.log('filterChapters>ajaxData:'+JSON.stringify(ajaxData));
     var $ = cheerio.load(ajaxData.html);
     var chapters = $('.chapter ');//大标题
     
     var title = $('.hd.clearfix').text().trim();
     var level = $($('.static-item.l')[1]).find('span').last().text().trim();
-    console.log('title:'+title+'level:'+level);
+    //console.log('title:'+title+'level:'+level);
 
     /*{
         title:title,
@@ -60,10 +61,10 @@ function filterChapters(ajaxData){
 function printCourseInfo(coursesData)
 {
     coursesData.forEach(function(courseData){
-        console.log(courseData.number+' 人学过 '+courseData.title+'\n');
+        console.log('print:'+courseData.number+' 人学过 '+courseData.title+'\n');
     })
-    coursesData.forEach(function(courseData){
-        console.log('###'+courseData.title+'\n');
+    /* coursesData.forEach(function(courseData){
+        console.log('###'+courseData.title +'['+ courseData.number+']\n');
         courseData.videos.forEach(function(item){
             var chapterTitle = item.chapterTitle;
             console.log(chapterTitle+'\n');
@@ -72,10 +73,10 @@ function printCourseInfo(coursesData)
                 console.log('['+video.id+']'+video.title+'\n')
             })
         })
-    })
+    }) */
 }
 
-function getPageAsyc(url){
+function getPageAsyc(url){//获取不同url的number和对应的页面html，返回对应的对象
     return new Promise(function(resolve,reject){
         var  ajaxData = {
             watchedNumber:0,
@@ -105,19 +106,19 @@ function getPageAsyc(url){
             
             http.get(options, function(res){
                 var rawData = '';
-                res.on('data', function(chunk) {
+                res.on('data', function(chunk) { 
+                    console.log('ajax开始获取！');
                     rawData += chunk;
                 })
-                res.on('end', function(){
+                res.on('end', function(){//{"result":0,"data":[{"id":"637","numbers":"41939"}],"msg":"\u6210\u529f"}
+                    console.log('ajax获取完毕！获得watchedNumber：'+parseInt(JSON.parse(rawData).data[0].numbers));
                     ajaxData.watchedNumber = parseInt(JSON.parse(rawData).data[0].numbers);
-                    resolve(ajaxData);
+                    resolve(ajaxData);//把数据返回去
                 }).on('error', function(e){
                     reject(e)
                 })
             })
         })
-    
-    
         console.log('正在爬取'+url);
         
         http.get(url,function(res){
@@ -128,10 +129,11 @@ function getPageAsyc(url){
             })
             
             res.on('end',function(){
+                 console.log('html获取完毕！');
+                 //console.log('html获取完毕！'+JSON.stringify(ajaxData));
                  ajaxData.html = html;
-                 resolve(ajaxData);
-                 //var courseData =   filterChapters(html);
-                 //printCourseInfo(courseData);
+                 resolve(numbers);//让前一个promise ajax完成，否则打印时可能ajax还未完成
+                 //console.log('html获取后：'+JSON.stringify(ajaxData));
             })
         })
         .on('error',function(e){
@@ -148,17 +150,17 @@ videoIds.forEach(function(id){
 
 Promise
     .all(fetchCourseArray)
-    .then(function(pages){
-        var coursesData = [];
+    .then(function(pages){        
+        var ChaptersData = [];
         pages.forEach(function(ajaxData){
             var courses = filterChapters(ajaxData);
-            
-            coursesData.push(courses);
+            //console.log('json:'+JSON.stringify(courses));
+            ChaptersData.push(courses);
         })
-        coursesData.sort(function(a,b){
-            return a.number< b.number;
+        ChaptersData.sort(function(a,b){
+            return a.number > b.number;
         })
-        printCourseInfo(coursesData);
+        printCourseInfo(ChaptersData);
     })
 
 
